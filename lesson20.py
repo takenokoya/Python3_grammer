@@ -25,3 +25,10 @@ print('############')
 # indexがいらないことを明示的に表す_(アンダースコア)
 for _ in range(10):
     print('hello')
+
+print('############')
+
+# enumerare関数
+# indexをつける
+for i, fruit in enumerate(['apple', 'banana', 'orange']):
+    print(i, fruit)
