@@ -19,8 +19,8 @@ def print_more(func):
     return wrapper
 
 
-@print_more
 @print_info
+@print_more
 def add_num(a, b):
     return a + b
 
