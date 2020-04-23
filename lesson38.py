@@ -1,5 +1,6 @@
 animal = 'cat'
 
+
 def f():
     global animal
     animal = 'dog'
