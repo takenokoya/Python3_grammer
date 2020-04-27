@@ -1,12 +1,13 @@
-class Person(object):
+import abc
+
+class Person(metaclass=abc.ABCMeta):
     def __init__(self, age=1):
         self.age = age
 
+    @abc.abstractmethod
     def drive(self):
-        if self.age >= 18:
-            print('OK')
-        else:
-            raise Exception('No Drive')
+        pass
+
 
 class Baby(Person):
     def __init__(self, age=1):
@@ -15,6 +16,9 @@ class Baby(Person):
         else:
             raise ValueError
 
+    def drive(self):
+        raise Exception('No Drive')
+
 class Adult(Person):
     def __init__(self, age=18):
         if age >= 18:
@@ -22,8 +26,13 @@ class Adult(Person):
         else:
             raise ValueError
 
+    def drive(self):
+        print('OK')
+
 baby = Baby()
+# baby.drive()
 adult = Adult()
+# adult.drive()
 
 # class継承
 class Car(object):
