@@ -2,7 +2,7 @@
 # class Person:
 # class Person():
 class Person(object):
-    # インスタンス生成時に実行されるメソッド
+    # インスタンス生成時に実行されるメソッド(コンストラクタ)
     # 初期化時にインスタンスに値を保持させる
     def __init__(self, name):
         self.name = name
@@ -14,6 +14,10 @@ class Person(object):
 
     def run(self, num):
         print('run!' * num)
+
+    # インスタンスが破壊されるときに実行されるメソッド(デストラクタ)
+    def __del__(self):
+        print('good bye')
 
 
 person = Person('Mike')
