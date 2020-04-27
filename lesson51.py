@@ -56,3 +56,11 @@ print('###########')
 tesla_car.enable_auto_run = True
 print(tesla_car.enable_auto_run)
 
+class T(object):
+    pass
+
+
+t = T()
+t.name = 'Mike'
+t.age = 20
+print(t.name, t.age)
