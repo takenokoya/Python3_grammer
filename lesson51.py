@@ -1,3 +1,30 @@
+class Person(object):
+    def __init__(self, age=1):
+        self.age = age
+
+    def drive(self):
+        if self.age >= 18:
+            print('OK')
+        else:
+            raise Exception('No Drive')
+
+class Baby(Person):
+    def __init__(self, age=1):
+        if age < 18:
+            super().__init__(age)
+        else:
+            raise ValueError
+
+class Adult(Person):
+    def __init__(self, age=18):
+        if age >= 18:
+            super().__init__(age)
+        else:
+            raise ValueError
+
+baby = Baby()
+adult = Adult()
+
 # class継承
 class Car(object):
     def __init__(self, model=None):
@@ -5,6 +32,9 @@ class Car(object):
 
     def run(self):
         print('run')
+
+    def ride(self, person):
+        person.drive()
 
 class ToyotaCar(Car):
     def run(self):
@@ -64,3 +94,9 @@ t = T()
 t.name = 'Mike'
 t.age = 20
 print(t.name, t.age)
+print('###########')
+
+person = Person(age=18)
+car.ride(person)
+print('###########')
+car.ride(adult)
