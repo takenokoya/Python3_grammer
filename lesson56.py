@@ -1,5 +1,5 @@
 # ファイルの作成や上書き
-f = open('text.txt', 'w')
-f.write('Test\n')
-print('I am print', file=f)
-f.close()
+with open('text.txt', 'w') as f:
+    f.write('Test\n')
+# withステートメントを使うことで、close()が不要となる
+# f.close()
