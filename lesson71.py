@@ -6,7 +6,7 @@ import time
 
 
 # 任意のURLからデータを取得
-url = 'https://su-gi-rx.com/'
+url = 'https://news.yahoo.co.jp/'
 res = req.urlopen(url)
 
 '''
