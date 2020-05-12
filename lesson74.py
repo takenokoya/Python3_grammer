@@ -1,4 +1,4 @@
-# psycopg2からPostgreSQLへ接続
+# psycopg2からAWS RedshifへCOPYコマンドを実行するサンプルコード
 import psycopg2
 from datetime import datetime, timedelta
 
@@ -43,7 +43,7 @@ add_log('psycopg2 cursor opened.')
 file = 's3://XXXXXXXXXXXXXXXXX_{}'.format(yesterday)
 # copy文
 copy_statement = """
-copy XXXXXXXXXXXXXXXX
+COPY XXXXXXXXXXXXXXXX
 FROM '{}'
 credentials 'aws_iam_role=xxxxxxxxxxxxxxxxx'
 gzip
