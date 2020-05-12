@@ -1,14 +1,29 @@
-# psycopg2からAWS RedshifへCOPYコマンドを実行するサンプルコード
+# psycopg2からPostgreSQLへ接続
 import psycopg2
-from datetime import datetime
+from datetime import datetime, timedelta
+
+yesterday = (datetime.today() - timedelta(days=1)).strftime('%Y-%m-%d')
+
+# ログファイル
+log_file = '/Users/sakaguchitakuya/PycharmProjects/python_programming/copy_log/log_{}'.format(yesterday)
+
+
+def create_log(string):
+    with open(log_file, 'w') as f:
+        f.write(string + '\n')
+
+
+def add_log(string):
+    with open(log_file, 'a') as f:
+        f.write(string + '\n')
 
 
 # Redshift接続情報
-hostName = "XXXXXXXXXXXXXXXXXXXXXXXXX"
-databaseName = "XXXXXXX"
+hostName = "XXXXXXXXXXXXXXXXXXXXX"
+databaseName = "XXXXXXXXXXXXXXXX"
 portNo = "5439"
-userName = "XXXXXXXXXXXXXXX"
-password = "XXXXXXXXXXXXXXXXXXX"
+userName = "XXXXXXXXXX"
+password = "XXXXXXXXXXXXXXXXXXXX"
 
 # Connectionオブジェクト作成
 conn = psycopg2.connect(
@@ -18,37 +33,36 @@ conn = psycopg2.connect(
     user=userName,
     password=password
 )
-print("psycopg2 connected.")
+create_log('psycopg2 connected')
 
 # SQL文を実行するためにはConnectionオブジェクトからさらにCursorオブジェクトを作成
 cur = conn.cursor()
-print("psycopg2 cursor opened.")
+add_log('psycopg2 cursor opened.')
 
-# file名
-today = datetime.now().strftime('%Y-%m-%d')
-file = 's3://XXXXXXXX/XXXXXXXXXX_{}'.format(today)
+# s3にあるcsvファイル
+file = 's3://XXXXXXXXXXXXXXXXX_{}'.format(yesterday)
 # copy文
 copy_statement = """
-COPY XXXXXX.XXXXXXXX
+copy XXXXXXXXXXXXXXXX
 FROM '{}'
-credentials 'aws_iam_role=XXXXXXXXXXXXXXX'
+credentials 'aws_iam_role=xxxxxxxxxxxxxxxxx'
 gzip
 delimiter ','
 csv
 ignoreheader 1
-region 'ap-northeast-1'
-""".format(file)
+region 'ap-northeast-1';
 
-print(copy_statement)
+""".format(file)
+add_log(copy_statement)
+
 # Cursorオブジェクトのexecute()メソッドでSQL文を実行
-print('COPY start.')
+add_log('COPY start.')
 cur.execute(copy_statement)
-print('COPY end.')
+add_log('COPY end.')
 # 変更をDBに保存
 conn.commit()
 # コネクションのクローズ
 cur.close()
-print("psycopg2 cursor closed.")
+add_log('psycopg2 cursor closed')
 conn.close()
-print("psycopg2 connection closed.")
-
+add_log('psycopg2 connection closed.')
